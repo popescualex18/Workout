@@ -1,0 +1,51 @@
+﻿@page "/users"
+<h3>Users</h3>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/user/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add User
+        </a>
+    </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search user by name"
+        @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-danger" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nume</th>
+            <th>Email</th>
+            <th>Parolă</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Users)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@user.Password</td>
+                <td>
+                    <a href='/user/edit/@user.Id' class="btn btn-outline-dark" role="button">
+                        Edit
+                    </a>
+                    <Button class="btn btn-outline-danger" role="button" @onclick="() =>DeleteUser(user.Id)">
+                        Delete
+                    </Button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
